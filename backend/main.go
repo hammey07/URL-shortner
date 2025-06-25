@@ -10,6 +10,7 @@ var urlStore = make(map[string]string)
 var counter = 1000
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
+	enableCORS(w)
 	originalURL := r.URL.Query().Get("url")
 	if originalURL == "" {
 		http.Error(w, "Missing ?url=parameter", http.StatusBadRequest)
@@ -41,4 +42,10 @@ func redirectHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	http.Redirect(w, r, originalURL, http.StatusFound)
+}
+
+func enableCORS(w http.ResponseWriter) {
+	w.Header().Set("Access-Control-Allow-Origin", "*") // Allow all origins
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 }
