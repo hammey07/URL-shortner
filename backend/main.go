@@ -23,7 +23,7 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 	urlStore[shortCode] = originalURL
 
 	shortURL := "http://localhost:8080/" + shortCode
-	fmt.Fprintf(w, "Short URL: %s\n", shortURL)
+	fmt.Fprintf(w, "%s", shortURL)
 }
 
 func main() {

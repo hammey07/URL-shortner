@@ -1,0 +1,118 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  --bg: #ebdacb;
+  --primary: #1b2a49;
+  --text: #3c3c3c;
+  --accent: #ff5c57;
+  color-scheme: light dark;
+  background-color: #242424;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b1220;
+    --primary: #3d94ff;
+    --text: #f0f8ff;
+    --accent: #ff3b30;
+  }
+}
+
+button {
+  padding: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  margin: 10px 5px;
+
+  &.primary-btn {
+    background-color: var(--accent);
+    color: white;
+  }
+  &.secondary-btn {
+    background-color: var(--primary);
+    color: white;
+  }
+}
+
+button:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+  &.primary-btn {
+    background-color: var(--primary);
+  }
+  &.secondary-btn {
+    background-color: var(--accent);
+  }
+}
+
+a {
+  font-weight: 500;
+  color: var(--primary);
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: var(--accent);
+}
+
+body {
+  text-align: center;
+  form.app-form .input-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  input[type="text"],
+  input[type="url"],
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    max-width: 400px;
+    padding: 5px 10px;
+    min-height: 37px;
+    font-size: 1rem;
+    color: black;
+    background-color: white;
+    border: 1px solid var(--primary);
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
+
+    &::placeholder {
+      color: gray;
+    }
+  }
+
+  input[type="text"]:focus,
+  input[type="url"]:focus,
+  input[type="email"]:focus,
+  input[type="password"]:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 5px var(--accent);
+  }
+
+  .message {
+    margin-top: 15px;
+    font-weight: bold;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: var(--primary);
+    background-color: var(--bg);
+  }
+
+  a:hover {
+    color: var(--accent);
+  }
+}
