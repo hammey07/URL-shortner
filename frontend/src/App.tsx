@@ -7,7 +7,7 @@ function App() {
   const [message, setMessage] = useState("Fill in URL below to get started");
   const [imgQR, setImgQR] = useState<string | null>(null);
 
-  function validURL(str) {
+  function validURL(str: string) {
     var pattern = new RegExp(
       "^(https?:\\/\\/)?" + // protocol
         "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
@@ -27,7 +27,7 @@ function App() {
     });
   }
 
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (validURL(url)) handleShorten();
     else setMessage("Whoops! URL Not Valid! Enter again 👀");
