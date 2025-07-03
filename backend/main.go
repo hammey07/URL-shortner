@@ -3,32 +3,53 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"strconv"
+	"strings"
 )
 
 var urlStore = make(map[string]string)
-var counter = 1000
+var counter = 100000
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
 	enableCORS(w)
 	originalURL := r.URL.Query().Get("url")
+	// originalURL := "facebook.com"
 	if originalURL == "" {
 		http.Error(w, "Missing ?url=parameter", http.StatusBadRequest)
 		return
 	}
+	// Add protocol if missing
+	if !strings.HasPrefix(originalURL, "http://") && !strings.HasPrefix(originalURL, "https://") {
+		originalURL = "https://" + originalURL
+	}
 
+	tinyCode := toBase62(uint64(counter))
 	counter++
-	shortCode := strconv.Itoa(counter)
 
-	urlStore[shortCode] = originalURL
+	urlStore[tinyCode] = originalURL
 
-	shortURL := "http://localhost:8080/" + shortCode
-	fmt.Fprintf(w, "%s", shortURL)
+	tinyURL := "https://shrink.fly.dev/" + tinyCode
+	fmt.Fprintf(w, "%s", tinyURL)
+}
+
+const (
+	base         uint64 = 62
+	characterSet        = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+)
+
+func toBase62(num uint64) string {
+	encoded := ""
+	for num > 0 {
+		r := num % base
+		num /= base
+		encoded = string(characterSet[r]) + encoded
+
+	}
+	return encoded
 }
 
 func main() {
+	// helloHandler()
 	http.HandleFunc("/shorten", helloHandler)
-	fmt.Print("Server Running on http://localhost:8080")
 	http.HandleFunc("/", redirectHandler)
 	http.ListenAndServe(":8080", nil)
 }
